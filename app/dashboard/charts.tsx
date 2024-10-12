@@ -44,7 +44,7 @@ export const LineChart = () => {
             <Buttons chatData={newData} onChangeBtnClick={() => setShowModel(val => !val)} />
             {showModel && <ChatDataForm
                 chatData={newData}
-                onChange={(data) => setNewData(data)}
+                onChange={(data) => setNewData(data as ChatData[])}
                 onSave={fetchData}
                 onClose={setShowModel}
                 type="line_and_bar_chat"
@@ -84,7 +84,7 @@ export const BarChart = () => {
             <Buttons chatData={newData} onChangeBtnClick={() => setShowModel(val => !val)} />
             {showModel && <ChatDataForm
                 chatData={newData}
-                onChange={(data) => setNewData(data)}
+                onChange={(data) => setNewData(data as ChatData[])}
                 onSave={fetchData}
                 onClose={setShowModel}
                 type="line_and_bar_chat"
@@ -139,7 +139,7 @@ export const PieChart = () => {
             <Buttons chatData={newData} onChangeBtnClick={() => setShowModel(val => !val)} />
             {showModel && <ChatDataForm
                 chatData={newData}
-                onChange={(data) => setNewData(data)}
+                onChange={(data) => setNewData(data as { name: string, value: number }[])}
                 onSave={fetchData}
                 onClose={setShowModel}
                 type="pie_chat"
@@ -148,7 +148,7 @@ export const PieChart = () => {
     )
 }
 
-function ChatDataForm({ chatData, onChange, onSave, onClose, type }: { chatData: ChatData[] | { name: string, value: number }[], onChange: (data: any) => void, onSave: () => Promise<void>, onClose: (val: boolean) => void, type: string }) {
+function ChatDataForm({ chatData, onChange, onSave, onClose, type }: { chatData: ChatData[] | { name: string, value: number }[], onChange: (data: ChatData[] | { name: string, value: number }[]) => void, onSave: () => Promise<void>, onClose: (val: boolean) => void, type: string }) {
     return (
         <div className='flex flex-col justify-center gap-2 fixed min-w-80 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 p-3 bg-white shadow-2xl z-20 rounded-md'>
             <textarea className='p-2 px-3 w-full' value={JSON.stringify(chatData)} onChange={e => onChange(JSON.parse(e.target.value))} rows={10} />
@@ -159,6 +159,7 @@ function ChatDataForm({ chatData, onChange, onSave, onClose, type }: { chatData:
                         await onSave()
                         onClose(false)
                     } catch (error) {
+                        console.log(error)
                         alert("Something went worng")
                     }
                 }} className='p-2 px-3 bg-blue-500 text-white rounded-md'>Save</button>
@@ -168,7 +169,7 @@ function ChatDataForm({ chatData, onChange, onSave, onClose, type }: { chatData:
     )
 }
 
-function Buttons({ chatData, onChangeBtnClick }: { chatData: ChatData[] | { name: string, value: number }[], onChangeBtnClick: (data: any) => void }) {
+function Buttons({ chatData, onChangeBtnClick }: { chatData: ChatData[] | { name: string, value: number }[], onChangeBtnClick: () => void }) {
     return (
         <div className='flex flex-row gap-2'>
             <button className='p-2 px-3 text-white bg-blue-500 rounded-md' onClick={onChangeBtnClick}>Change</button>

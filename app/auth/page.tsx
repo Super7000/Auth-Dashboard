@@ -23,10 +23,10 @@ export default function Auth() {
         }
 
         const { data: user, error } = response;
-
+        
         if (error) {
             setMessage(error.message);
-        } else {
+        } else if (user) {
             setMessage(isLogin ? 'Login successful!' : 'Signup successful! Check your email.');
             if (!isLogin) {
                 window.location.href = '/auth';
@@ -34,6 +34,8 @@ export default function Auth() {
                 // Redirect to dashboard
                 window.location.href = '/dashboard';
             }
+        } else {
+            setMessage('Something went wrong!');
         }
     };
 

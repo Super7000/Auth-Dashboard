@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
     const { data, error } = await supabase.from('chat_data').select('data').eq('type', 'line_and_bar_chat');
+    if (error) console.log(error);
     return NextResponse.json(data);
 }
 
