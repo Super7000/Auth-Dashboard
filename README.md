@@ -67,6 +67,69 @@ This guide will walk you through setting up Supabase for storing and retrieving 
    - `type`: A text field to define the type of chart (e.g., `line_and_bar_chat`, `pie_chat`).
    - `data`: A JSONB field to store the chart data as JSON.
 
+Follow exact structure like the given screenshot:
+![Screenshot 2024-10-12 221211](https://github.com/user-attachments/assets/cd521b1c-7233-49bf-8e3d-7c70fd7cecf0)
+
+Here the json obj of -
+
+**line_and_bar_chat_data**:
+```bash
+[
+  {
+    "name": "Page A",
+    "uv": "2000",
+    "pv": "1000",
+    "amt": "2000"
+  },
+  {
+    "name": "Page C",
+    "uv": 2000,
+    "pv": 9800,
+    "amt": 2290
+  },
+  {
+    "name": "Page D",
+    "uv": 2780,
+    "pv": 3908,
+    "amt": 2000
+  },
+  {
+    "name": "Page E",
+    "uv": 1890,
+    "pv": 4800,
+    "amt": 2181
+  },
+  {
+    "name": "Page B",
+    "uv": 2000,
+    "pv": 4000,
+    "amt": 2000
+  }
+]
+```
+
+**pie_chat**:
+```bash
+[
+  {
+    "name": "Group A",
+    "value": 400
+  },
+  {
+    "name": "Group B",
+    "value": 300
+  },
+  {
+    "name": "Group C",
+    "value": 300
+  },
+  {
+    "name": "Group D",
+    "value": 200
+  }
+]
+```
+
 5. Save the table.
 
 Here’s a summary of the table schema:
