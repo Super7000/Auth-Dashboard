@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { BarChart as RechartsBarChart, Bar } from 'recharts'
 import { PieChart as RechartsPieChart, Pie, Cell } from 'recharts'
+import { supabase } from '../lib/superbass'
 
 const data = [
     { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
@@ -106,15 +107,30 @@ export const PieChart = () => {
     const [newData, setNewData] = useState(pieData)
     const [showModel, setShowModel] = useState(false)
 
-    useEffect(() => {
-        const eventSource = new EventSource('/api/data/pie_chat'); // Listen to SSE
-        eventSource.onmessage = (event) => {
-            const newData = JSON.parse(event.data);
-            console.log(newData)
-            setNewData(newData.data);
-        };
+    const fetchData = async () => {
+        const res = await fetch('/api/data/pie_chat')
+        const data = await res.json()
+        setNewData(data[0].data)
+    }
 
-        return () => eventSource.close(); // Cleanup event source
+    useEffect(() => {
+        fetchData()
+        const channel = supabase
+            .channel('public:chat_data')
+            .on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'chat_data',
+            }, (payload) => {
+                if (payload.new && 'type' in payload.new && payload.new.type === 'pie_chat')
+                    setNewData(payload.new.data); // Send the filtered event payload to clients
+            })
+            .subscribe();
+
+        // Stop subscription if client disconnects
+        return () => {
+            supabase.removeChannel(channel); // Clean up the channel
+        };
     }, [])
 
     return (
@@ -141,7 +157,7 @@ export const PieChart = () => {
             {showModel && <ChatDataForm
                 chatData={newData}
                 onChange={(data) => setNewData(data as { name: string, value: number }[])}
-                onSave={async () => { }}
+                onSave={fetchData}
                 onClose={setShowModel}
                 type="pie_chat"
             />}
