@@ -1,4 +1,3 @@
-// app/dashboard/charts.tsx
 'use client'
 import { useEffect, useState } from 'react'
 import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
@@ -123,11 +122,10 @@ export const PieChart = () => {
                 table: 'chat_data',
             }, (payload) => {
                 if (payload.new && 'type' in payload.new && payload.new.type === 'pie_chat')
-                    setNewData(payload.new.data); // Send the filtered event payload to clients
+                    setNewData(payload.new.data);
             })
             .subscribe();
 
-        // Stop subscription if client disconnects
         return () => {
             supabase.removeChannel(channel); // Clean up the channel
         };

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/superbass';
-import { User } from '@supabase/supabase-js'; // Import User type from supabase-js
+import { User } from '@supabase/supabase-js';
 import { LineChart, BarChart, PieChart } from './charts';
 import SideBar from './SideBar';
 

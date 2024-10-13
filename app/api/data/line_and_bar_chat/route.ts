@@ -1,4 +1,4 @@
-// app/api/data/line_and_bar_chat/route.ts
+// api/data/line_and_bar_chat
 import { supabase } from '@/app/lib/superbass';
 import { NextRequest, NextResponse } from 'next/server';
 

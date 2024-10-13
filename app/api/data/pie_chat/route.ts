@@ -1,4 +1,4 @@
-// app/api/data/pie_chat/route.ts
+// api/data/pie_chat
 import { supabase } from '@/app/lib/superbass';
 import { NextRequest, NextResponse } from 'next/server';
 
