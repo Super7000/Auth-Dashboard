@@ -169,6 +169,12 @@ yarn add @supabase/supabase-js
 1. In your Next.js project, create a **`.env.local`** file (if it doesn’t already exist).
 2. Add the Supabase **Project URL** and **Anon Key** to this file. These values should not be hard-coded in your app.
 
+Here's a example: 
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
 ---
 
 ## 6. Implement API Routes
