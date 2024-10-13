@@ -94,7 +94,7 @@ export const BarChart = () => {
 }
 
 const pieData = [
-    { name: 'Group A', value: 400 },
+    { name: 'Group WWsA', value: 400 },
     { name: 'Group B', value: 300 },
     { name: 'Group C', value: 300 },
     { name: 'Group D', value: 200 },
@@ -106,14 +106,15 @@ export const PieChart = () => {
     const [newData, setNewData] = useState(pieData)
     const [showModel, setShowModel] = useState(false)
 
-    const fetchData = async () => {
-        const res = await fetch('/api/data/pie_chat')
-        const data = await res.json()
-        setNewData(data[0].data)
-    }
-
     useEffect(() => {
-        fetchData()
+        const eventSource = new EventSource('/api/data/pie_chat'); // Listen to SSE
+        eventSource.onmessage = (event) => {
+            const newData = JSON.parse(event.data);
+            console.log(newData)
+            setNewData(newData.data);
+        };
+
+        return () => eventSource.close(); // Cleanup event source
     }, [])
 
     return (
@@ -140,7 +141,7 @@ export const PieChart = () => {
             {showModel && <ChatDataForm
                 chatData={newData}
                 onChange={(data) => setNewData(data as { name: string, value: number }[])}
-                onSave={fetchData}
+                onSave={async () => { }}
                 onClose={setShowModel}
                 type="pie_chat"
             />}

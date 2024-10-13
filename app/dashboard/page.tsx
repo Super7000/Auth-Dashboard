@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/superbass';
 import { User } from '@supabase/supabase-js'; // Import User type from supabase-js
-import { LineChart, BarChart, PieChart } from './charts'
+import { LineChart, BarChart, PieChart } from './charts';
 import SideBar from './SideBar';
 
 export default function Dashboard() {
@@ -45,7 +45,7 @@ export default function Dashboard() {
                                 <BarChart />
                             </div>
                             <div className="bg-white p-4 rounded shadow grid justify-items-center">
-                                <h2 className="text-lg font-semibold mb-2">Pie Chart</h2>
+                                <h2 className="text-lg font-semibold mb-2">Pie Chart (Realtime)</h2>
                                 <PieChart />
                             </div>
                         </div>
